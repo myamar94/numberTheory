@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <base href="/">
     <title>Number Theory</title>
+
+    <!------------------------Css files-------------------------->
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Dosis|Indie+Flower" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
     <link rel="stylesheet" href="../styles/animate.css">
+    <!------------------------Google fonts-------------------------->
+    <link href="https://fonts.googleapis.com/css?family=Dosis|Indie+Flower" rel="stylesheet">
+
+    <!------------------------Js scripts -------------------------->
     <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -18,10 +23,11 @@
     <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="../app.js"></script>
     <script src="../controllers/mainController.js"></script>
-    <script src="../controllers/chartController.js"></script>
     <script src="../bower_components/d3/d3.min.js"></script>
     <script src="../pie-chart.js"></script>
 </head>
+
+<!------------------------Body-------------------------->
 
 <body ng-controller="mainCtrl">
 
@@ -44,31 +50,31 @@
                 </div>
 
 
-      <!------------------------ui-view-------------------------->
+                <!------------------------ui-view-------------------------->
 
                 <div ui-view="">
                     <div class="addButton">
-                        <button value="+" ng-click="addNewData()" ng-hide="hidePlusButton">+</button>
+                        <button value="+" ng-click="addNewData()" ng-hide="hideAddButton">+</button>
                         <button value="-" ng-click="hideNewData()" ng-hide="hideMinusButton">-</button>
                         <button value="-" ng-click="hide()" ng-hide="hideMinus">-</button>
                     </div><br>
-                    
- <!------------------------Data Table-------------------------->
+
+                    <!------------------------Data Table-------------------------->
 
                     <div class="inner cover">
                         <table class="table table-responsive" ng-hide="hideDataTable">
                             <thead>
 
-                                <td>Row</td>
+                                <td>uid</td>
                                 <td>First Name</td>
                                 <td>Last Name</td>
                                 <td>Email</td>
                                 <td>Actions</td>
 
                             </thead>
-                            <tbody ng-init="i=0">
+                            <tbody>
                                 <tr ng-repeat="data in dataArr">
-                                    <td>{{$scope.dataArr.indexOf[data]}}</td>
+                                    <td>{{$index+1}}</td>
                                     <td>{{data.fname}}</td>
                                     <td>{{data.lname}}</td>
                                     <td>{{data.email}}</td>
@@ -78,68 +84,69 @@
                             </tbody>
                         </table>
 
-   <!------------------------Add Data Form-------------------------->
-                        
+                        <!------------------------Add Data Form-------------------------->
+
                         <div class="addForm" ng-hide="hideAddDataForm">
-                            <form ng-submit="submitNewData(user)" class="loginForm" autocomplete="off">
+                            <form ng-submit="submitNewData(newData)" class="loginForm" autocomplete="off">
                                 <h1 class="lead">Add New Data...!</h1>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" ng-model="user.firstName" class="form-control" name="fname" placeholder="First Name">
+                                    <input type="text" ng-model="newData.firstName" class="form-control" name="fname" placeholder="First Name" required>
                                 </div>
                                 <span class="help-block"></span>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                    <input type="text" ng-model="user.lastName" class="form-control" name="lname" placeholder="Last Name">
+                                    <input type="text" ng-model="newData.lastName" class="form-control" name="lname" placeholder="Last Name" required>
                                 </div>
 
                                 <span class="help-block"></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="email" ng-model="user.email" class="form-control" name="email" placeholder="Email">
+                                    <input type="email" ng-model="newData.email" class="form-control" name="email" placeholder="Email" required>
                                 </div>
                                 <span class="help-block"></span>
-                                <span ng-bind="firstname"></span>
+
                                 <button type="submit" class="btn btn-success btn-lg" style="float:right;">Add Data</button>
                             </form>
-                            <span ng-bind="user.firstName"></span>
+
                         </div>
 
 
-<!------------------------Edit Data Form-------------------------->
-                       
-                        
+                        <!------------------------Edit Data Form-------------------------->
+
+
                         <div class="addForm" ng-hide="hideEditForm">
 
-                            <form class="loginForm" autocomplete="off"  ng-submit="doneEdit(data)">
+                            <form class="loginForm" autocomplete="off" ng-submit="doneEdit(edit)">
 
-                                <h1 class="lead">Edit Data...!</h1>
+                                <h1 class="lead">Edit Data of "{{firstname }}{{" "+lastname}}"!</h1>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" class="form-control" name="fname" placeholder="First Name" ng-model="editfirstname" value="{{editUser.fname}}">
+                                    <input type="text" class="form-control" name="fname" ng-model="edit.editfirstname" placeholder="First Name" required>
+                                    <span></span>
                                 </div>
                                 <span class="help-block"></span>
 
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                    <input type="text" class="form-control" name="lname" placeholder="Last Name" ng-model="editlastname">
+                                    <input type="text" class="form-control" name="lname" placeholder="Last Name" ng-model="edit.editlastname" required>
                                 </div>
 
                                 <span class="help-block"></span>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                    <input type="email" class="form-control" name="email" placeholder="Email" ng-model="editemail">
+                                    <input type="email" class="form-control" name="email" placeholder="Email" ng-model="edit.editemail" required>
                                 </div>
                                 <span class="help-block"></span>
-                                <span ng-bind="firstname"></span>
+
                                 <button type="submit" class="btn btn-success btn-lg" style="float:right;">Done..!</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
-<!------------------------Footer-------------------------->
+                <!------------------------Footer-------------------------->
 
                 <div class="mastfoot">
                     <div class="inner animated tada">

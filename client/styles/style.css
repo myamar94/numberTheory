@@ -214,27 +214,20 @@ body {
 
 .arc text {
     font-size: 16px;
-   
     font-family: 'Dosis', sans-serif;
     text-anchor: middle;
 }
 
-
-.arc path{
-    
+.arc path {
     stroke: #fff;
 }
 
-.importPie{
-    
-    margin-top: 80px;
-    margin-bottom: 50px;
+.importPie {}
+
+.zoom {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
 }
 
 
-
-/*******tooltip*****/
-
-.tooltip {
-    color:black;
-}
